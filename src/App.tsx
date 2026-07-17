@@ -199,7 +199,7 @@ function App() {
     width: qrSize,
     height: qrSize,
     type: "svg" as const,
-    data: url,
+    data: url.trim() || "https://reviewqr.site",
     margin: 0,
     qrOptions: {
       typeNumber: 0 as any,
@@ -388,13 +388,16 @@ function App() {
 
           <div className="form-group">
             <label>{t('googleMapsLink')}</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder={t('linkPlaceholder')}
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-            />
+            <div className="input-group">
+              <input 
+                type="url" 
+                placeholder="https://g.page/r/..." 
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                className="main-input"
+                autoFocus
+              />
+            </div>
           </div>
 
           <div className="form-group">
@@ -537,8 +540,12 @@ function App() {
                       width: '44px', height: '44px', padding: '6px',
                       border: dotsType === shape.id ? '2px solid var(--primary)' : '1px solid var(--border-color)',
                       borderRadius: '8px', background: 'var(--card-bg)', cursor: 'pointer',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center'
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      transition: 'all 0.2s ease',
+                      transform: dotsType === shape.id ? 'scale(1.05)' : 'scale(1)'
                     }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = dotsType === shape.id ? 'scale(1.05)' : 'scale(1)'}
                   >
                     <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">{shape.svg}</svg>
                   </button>
@@ -562,8 +569,12 @@ function App() {
                       width: '44px', height: '44px', padding: '6px',
                       border: cornersSquareType === shape.id ? '2px solid var(--primary)' : '1px solid var(--border-color)',
                       borderRadius: '8px', background: 'var(--card-bg)', cursor: 'pointer',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center'
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      transition: 'all 0.2s ease',
+                      transform: cornersSquareType === shape.id ? 'scale(1.05)' : 'scale(1)'
                     }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = cornersSquareType === shape.id ? 'scale(1.05)' : 'scale(1)'}
                   >
                     <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">{shape.svg}</svg>
                   </button>
@@ -587,8 +598,12 @@ function App() {
                         width: '44px', height: '44px', padding: '6px',
                         border: cornersDotType === shape.id ? '2px solid var(--primary)' : '1px solid var(--border-color)',
                         borderRadius: '8px', background: 'var(--card-bg)', cursor: 'pointer',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center'
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        transition: 'all 0.2s ease',
+                        transform: cornersDotType === shape.id ? 'scale(1.05)' : 'scale(1)'
                       }}
+                      onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                      onMouseLeave={(e) => e.currentTarget.style.transform = cornersDotType === shape.id ? 'scale(1.05)' : 'scale(1)'}
                     >
                       <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">{shape.svg}</svg>
                     </button>
