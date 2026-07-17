@@ -517,39 +517,88 @@ function App() {
           <hr className="divider" />
           <h3 className="section-subtitle">{t('qrDesign')}</h3>
 
-          <div className="grid-2">
+          <div className="grid-1" style={{ gap: '1.5rem' }}>
             <div className="form-group">
               <label>{t('bodyShape')}</label>
-              <select className="form-control" value={dotsType} onChange={(e) => setDotsType(e.target.value as any)}>
-                <option value="square">{t('shapeSquare')}</option>
-                <option value="dots">{t('shapeDots')}</option>
-                <option value="rounded">{t('shapeRounded')}</option>
-                <option value="extra-rounded">{t('shapeExtraRounded')}</option>
-                <option value="classy">{t('shapeClassy')}</option>
-                <option value="classy-rounded">{t('shapeClassyRounded')}</option>
-              </select>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {[
+                  { id: 'square', svg: <path d="M3 3h6v6H3zM15 3h6v6h-6zM3 15h6v6H3zM15 15h6v6h-6z"/> },
+                  { id: 'dots', svg: <g><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/></g> },
+                  { id: 'rounded', svg: <g><rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="3" width="6" height="6" rx="1.5"/><rect x="3" y="15" width="6" height="6" rx="1.5"/><rect x="15" y="15" width="6" height="6" rx="1.5"/></g> },
+                  { id: 'extra-rounded', svg: <g><rect x="3" y="3" width="6" height="6" rx="3"/><rect x="15" y="3" width="6" height="6" rx="3"/><rect x="3" y="15" width="6" height="6" rx="3"/><rect x="15" y="15" width="6" height="6" rx="3"/></g> },
+                  { id: 'classy', svg: <g><path d="M3 3h6v6H3zM15 3h6v6h-6zM3 15h6v6H3z" rx="2"/><rect x="15" y="15" width="6" height="6" rx="2"/></g> },
+                  { id: 'classy-rounded', svg: <g><path d="M3 6a3 3 0 013-3h3v6H3V6z"/><path d="M15 3h3a3 3 0 013 3v3h-6V3z"/><path d="M3 15v3a3 3 0 003 3h3v-6H3z"/><circle cx="18" cy="18" r="3"/></g> }
+                ].map(shape => (
+                  <button
+                    key={shape.id}
+                    title={shape.id}
+                    onClick={() => setDotsType(shape.id)}
+                    style={{
+                      width: '44px', height: '44px', padding: '6px',
+                      border: dotsType === shape.id ? '2px solid var(--primary)' : '1px solid var(--border-color)',
+                      borderRadius: '8px', background: 'var(--card-bg)', cursor: 'pointer',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center'
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">{shape.svg}</svg>
+                  </button>
+                ))}
+              </div>
             </div>
+
             <div className="form-group">
               <label>{t('eyeFrameShape')}</label>
-              <select className="form-control" value={cornersSquareType} onChange={(e) => setCornersSquareType(e.target.value as any)}>
-                <option value="square">{t('shapeSquare')}</option>
-                <option value="dot">{t('shapeDot')}</option>
-                <option value="extra-rounded">{t('shapeExtraRounded')}</option>
-              </select>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {[
+                  { id: 'square', svg: <path d="M2 2h20v20H2zM6 6h12v12H6z" fillRule="evenodd"/> },
+                  { id: 'dot', svg: <path d="M12 2a10 10 0 0110 10 10 10 0 01-10 10A10 10 0 012 12 10 10 0 0112 2zm0 4a6 6 0 00-6 6 6 6 0 006 6 6 6 0 006-6 6 6 0 00-6-6z" fillRule="evenodd"/> },
+                  { id: 'extra-rounded', svg: <path d="M6 2h12a4 4 0 014 4v12a4 4 0 01-4 4H6a4 4 0 01-4-4V6a4 4 0 014-4zm0 4v12h12V6H6z" fillRule="evenodd"/> }
+                ].map(shape => (
+                  <button
+                    key={shape.id}
+                    title={shape.id}
+                    onClick={() => setCornersSquareType(shape.id)}
+                    style={{
+                      width: '44px', height: '44px', padding: '6px',
+                      border: cornersSquareType === shape.id ? '2px solid var(--primary)' : '1px solid var(--border-color)',
+                      borderRadius: '8px', background: 'var(--card-bg)', cursor: 'pointer',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center'
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">{shape.svg}</svg>
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-
-          <div className="grid-2">
-            <div className="form-group">
-              <label>{t('eyeBallShape')}</label>
-              <select className="form-control" value={cornersDotType} onChange={(e) => setCornersDotType(e.target.value as any)}>
-                <option value="square">{t('shapeSquare')}</option>
-                <option value="dot">{t('shapeDot')}</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label>{t('eyeColor')}</label>
-              <input type="color" className="form-control" value={eyeColor || qrColor} onChange={(e) => setEyeColor(e.target.value)} />
+            
+            <div className="grid-2">
+              <div className="form-group">
+                <label>{t('eyeBallShape')}</label>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {[
+                    { id: 'square', svg: <rect x="6" y="6" width="12" height="12"/> },
+                    { id: 'dot', svg: <circle cx="12" cy="12" r="6"/> }
+                  ].map(shape => (
+                    <button
+                      key={shape.id}
+                      title={shape.id}
+                      onClick={() => setCornersDotType(shape.id)}
+                      style={{
+                        width: '44px', height: '44px', padding: '6px',
+                        border: cornersDotType === shape.id ? '2px solid var(--primary)' : '1px solid var(--border-color)',
+                        borderRadius: '8px', background: 'var(--card-bg)', cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center'
+                      }}
+                    >
+                      <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">{shape.svg}</svg>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="form-group">
+                <label>{t('eyeColor')}</label>
+                <input type="color" className="form-control" value={eyeColor || qrColor} onChange={(e) => setEyeColor(e.target.value)} />
+              </div>
             </div>
           </div>
 
