@@ -58,5 +58,20 @@
   "alignCenter": "Centre",
   "alignRight": "Droite",
   "titleColor": "Couleur du Titre",
-  "qrBlockRadius": "Arrondi de la Boîte QR"
+  "qrBlockRadius": "Arrondi de la Boîte QR",
+  "contactText": "Texte Inférieur (Contact/Info)",
+  "qrDesign": "Design du Code QR",
+  "bodyShape": "Forme du Corps",
+  "eyeFrameShape": "Cadre de l'Œil",
+  "eyeBallShape": "Centre de l'Œil",
+  "shapeSquare": "Carré",
+  "shapeDots": "Points",
+  "shapeRounded": "Arrondi",
+  "shapeExtraRounded": "Extra Arrondi",
+  "shapeClassy": "Classique",
+  "shapeClassyRounded": "Classique Arrondi",
+  "shapeDot": "Point",
+  "useGradient": "Utiliser un Dégradé",
+  "gradientColor": "Couleur de Fin du Dégradé",
+  "eyeColor": "Couleur des Yeux"
 }

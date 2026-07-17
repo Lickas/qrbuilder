@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { QRCodeSVG } from 'qrcode.react';
+import QRCodeStyling from 'qr-code-styling';
 import { toPng, toBlob } from 'html-to-image';
 import { Download, Copy, Moon, Sun, Upload, X, Heart } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
@@ -99,6 +99,13 @@ function App() {
   const [textAlign, setTextAlign] = useState<'left'|'center'|'right'>('center');
   const [titleColor, setTitleColor] = useState('');
   const [qrBlockRadius, setQrBlockRadius] = useState(8);
+  const [contactText, setContactText] = useState('');
+  const [dotsType, setDotsType] = useState<any>('square');
+  const [cornersSquareType, setCornersSquareType] = useState<any>('square');
+  const [cornersDotType, setCornersDotType] = useState<any>('square');
+  const [isGradient, setIsGradient] = useState(false);
+  const [gradientColor, setGradientColor] = useState('#a78bfa');
+  const [eyeColor, setEyeColor] = useState('');
 
   const [customTitle, setCustomTitle] = useState('');
   const [customSubtitle, setCustomSubtitle] = useState('');
@@ -188,28 +195,81 @@ function App() {
     setPendingAction(null);
   };
 
-  const qrCodeProps = {
-    value: url,
-    size: qrSize,
-    fgColor: qrColor,
-    bgColor: "transparent",
-    level: logo ? 'H' : errorLevel, // Always force High correction when logo is present
-    includeMargin: false,
-    imageSettings: logo ? {
-      src: logo.src,
-      height: logo.height >= logo.width ? (qrSize * (logoScale / 100)) : ((logo.height / logo.width) * qrSize * (logoScale / 100)),
-      width: logo.width >= logo.height ? (qrSize * (logoScale / 100)) : ((logo.width / logo.height) * qrSize * (logoScale / 100)),
-      excavate: true,
-    } : undefined
+  const qrCodeOptions = useMemo(() => ({
+    width: qrSize,
+    height: qrSize,
+    type: "svg" as const,
+    data: url,
+    margin: 0,
+    qrOptions: {
+      typeNumber: 0 as any,
+      mode: "Byte" as any,
+      errorCorrectionLevel: logo ? "H" : errorLevel as any
+    },
+    imageOptions: {
+      hideBackgroundDots: true,
+      imageSize: logoScale / 100,
+      margin: 0,
+      crossOrigin: "anonymous"
+    },
+    dotsOptions: {
+      color: qrColor,
+      type: dotsType,
+      gradient: isGradient ? {
+        type: 'linear',
+        rotation: 0,
+        colorStops: [
+          { offset: 0, color: qrColor },
+          { offset: 1, color: gradientColor }
+        ]
+      } : undefined
+    },
+    backgroundOptions: {
+      color: "transparent"
+    },
+    image: logo ? logo.src : undefined,
+    cornersSquareOptions: {
+      color: eyeColor || qrColor,
+      type: cornersSquareType
+    },
+    cornersDotOptions: {
+      color: eyeColor || (isGradient ? qrColor : undefined) || qrColor,
+      type: cornersDotType
+    }
+  }), [url, qrSize, qrColor, errorLevel, logo, logoScale, dotsType, cornersSquareType, cornersDotType, isGradient, gradientColor, eyeColor]);
+
+  const QRCodeRenderer = ({ options }: { options: any }) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const [qrCode] = useState(() => new QRCodeStyling(options));
+    
+    useEffect(() => {
+      if (ref.current) {
+        qrCode.append(ref.current);
+      }
+    }, [qrCode]);
+
+    useEffect(() => {
+      qrCode.update(options);
+    }, [qrCode, options]);
+
+    return <div ref={ref} />;
   };
 
   const displayTitle = customTitle.trim() !== '' ? customTitle : t('frameText');
   const displaySubtitle = customSubtitle.trim() !== '' ? customSubtitle : t('scanMe');
   const frameFontStyle: React.CSSProperties = { fontFamily: FONT_MAP[fontFamily], textAlign };
 
+  const ContactTextBlock = ({ color }: { color: string }) => (
+    contactText.trim() !== '' ? (
+      <div style={{ color, fontSize: '0.9rem', marginTop: '0.75rem', fontWeight: 500, letterSpacing: '-0.01em' }}>
+        {contactText}
+      </div>
+    ) : null
+  );
+
   const QRCodeBlock = () => (
     <div style={{ padding: `${qrPadding}px`, backgroundColor: bgColor, borderRadius: `${qrBlockRadius}px` }}>
-      <QRCodeSVG {...qrCodeProps as any} />
+      <QRCodeRenderer options={qrCodeOptions} />
     </div>
   );
 
@@ -228,6 +288,7 @@ function App() {
               <GoogleMapsPin size={18} color={themeColor} />
               {displaySubtitle}
             </div>
+            <ContactTextBlock color={themeColor} />
           </div>
         );
       case 'gradient':
@@ -244,6 +305,7 @@ function App() {
                 <GoogleMapsPin size={18} color="#64748b" />
                 {displaySubtitle}
               </div>
+              <ContactTextBlock color="#64748b" />
             </div>
           </div>
         );
@@ -260,6 +322,7 @@ function App() {
               <GoogleMapsPin size={18} color="#d4af37" />
               {displaySubtitle}
             </div>
+            <ContactTextBlock color="#64748b" />
           </div>
         );
       case 'playful':
@@ -275,6 +338,7 @@ function App() {
               <GoogleMapsPin size={20} color={themeColor} />
               {displaySubtitle}
             </div>
+            <ContactTextBlock color="#64748b" />
           </div>
         );
       case 'minimal':
@@ -291,6 +355,7 @@ function App() {
               <GoogleMapsPin size={18} color="#64748b" />
               {displaySubtitle}
             </div>
+            <ContactTextBlock color="#64748b" />
           </div>
         );
     }
@@ -355,8 +420,19 @@ function App() {
 
           <div className="grid-2">
             <div className="form-group">
-              <label>{t('qrColor')}</label>
-              <input type="color" className="form-control" value={qrColor} onChange={(e) => setQrColor(e.target.value)} />
+              <label style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span>{t('qrColor')}</span>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', margin: 0 }}>
+                  <input type="checkbox" checked={isGradient} onChange={(e) => setIsGradient(e.target.checked)} style={{ width: 'auto' }} />
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t('useGradient')}</span>
+                </label>
+              </label>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <input type="color" className="form-control" value={qrColor} onChange={(e) => setQrColor(e.target.value)} style={{ flex: 1 }} />
+                {isGradient && (
+                  <input type="color" className="form-control" value={gradientColor} onChange={(e) => setGradientColor(e.target.value)} style={{ flex: 1 }} title={t('gradientColor')} />
+                )}
+              </div>
             </div>
             <div className="form-group">
               <label>{t('bgColor')}</label>
@@ -430,6 +506,50 @@ function App() {
             <div className="form-group">
               <label>{t('titleColor')}</label>
               <input type="color" className="form-control" value={titleColor || themeColor} onChange={(e) => setTitleColor(e.target.value)} />
+            </div>
+          </div>
+
+          <div className="form-group" style={{ marginTop: '1rem' }}>
+            <label>{t('contactText')}</label>
+            <input type="text" className="form-control" placeholder="+351 910 000 000" value={contactText} onChange={(e) => setContactText(e.target.value)} />
+          </div>
+
+          <hr className="divider" />
+          <h3 className="section-subtitle">{t('qrDesign')}</h3>
+
+          <div className="grid-2">
+            <div className="form-group">
+              <label>{t('bodyShape')}</label>
+              <select className="form-control" value={dotsType} onChange={(e) => setDotsType(e.target.value as any)}>
+                <option value="square">{t('shapeSquare')}</option>
+                <option value="dots">{t('shapeDots')}</option>
+                <option value="rounded">{t('shapeRounded')}</option>
+                <option value="extra-rounded">{t('shapeExtraRounded')}</option>
+                <option value="classy">{t('shapeClassy')}</option>
+                <option value="classy-rounded">{t('shapeClassyRounded')}</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>{t('eyeFrameShape')}</label>
+              <select className="form-control" value={cornersSquareType} onChange={(e) => setCornersSquareType(e.target.value as any)}>
+                <option value="square">{t('shapeSquare')}</option>
+                <option value="dot">{t('shapeDot')}</option>
+                <option value="extra-rounded">{t('shapeExtraRounded')}</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid-2">
+            <div className="form-group">
+              <label>{t('eyeBallShape')}</label>
+              <select className="form-control" value={cornersDotType} onChange={(e) => setCornersDotType(e.target.value as any)}>
+                <option value="square">{t('shapeSquare')}</option>
+                <option value="dot">{t('shapeDot')}</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>{t('eyeColor')}</label>
+              <input type="color" className="form-control" value={eyeColor || qrColor} onChange={(e) => setEyeColor(e.target.value)} />
             </div>
           </div>
 

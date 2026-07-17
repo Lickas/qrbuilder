@@ -58,5 +58,20 @@
   "alignCenter": "Centro",
   "alignRight": "Direita",
   "titleColor": "Cor do Título",
-  "qrBlockRadius": "Arredondamento do Fundo QR"
+  "qrBlockRadius": "Arredondamento do Fundo QR",
+  "contactText": "Texto de Fundo (Contacto/Info)",
+  "qrDesign": "Design do Código QR",
+  "bodyShape": "Formato do Corpo",
+  "eyeFrameShape": "Moldura do Olho",
+  "eyeBallShape": "Centro do Olho",
+  "shapeSquare": "Quadrado",
+  "shapeDots": "Pontos",
+  "shapeRounded": "Arredondado",
+  "shapeExtraRounded": "Extra Arredondado",
+  "shapeClassy": "Clássico",
+  "shapeClassyRounded": "Clássico Arredondado",
+  "shapeDot": "Ponto",
+  "useGradient": "Usar Gradiente",
+  "gradientColor": "Cor Final do Gradiente",
+  "eyeColor": "Cor dos Olhos"
 }

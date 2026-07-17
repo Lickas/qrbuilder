@@ -58,5 +58,20 @@
   "alignCenter": "Center",
   "alignRight": "Right",
   "titleColor": "Custom Title Color",
-  "qrBlockRadius": "QR Box Corner Radius"
+  "qrBlockRadius": "QR Box Corner Radius",
+  "contactText": "Bottom Text (Contact/Info)",
+  "qrDesign": "QR Code Body Design",
+  "bodyShape": "Body Shape",
+  "eyeFrameShape": "Eye Frame Shape",
+  "eyeBallShape": "Eye Ball Shape",
+  "shapeSquare": "Square",
+  "shapeDots": "Dots",
+  "shapeRounded": "Rounded",
+  "shapeExtraRounded": "Extra Rounded",
+  "shapeClassy": "Classy",
+  "shapeClassyRounded": "Classy Rounded",
+  "shapeDot": "Dot",
+  "useGradient": "Use Gradient Color",
+  "gradientColor": "Gradient End Color",
+  "eyeColor": "Custom Eye Color"
 }

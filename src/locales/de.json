@@ -58,5 +58,20 @@
   "alignCenter": "Zentriert",
   "alignRight": "Rechts",
   "titleColor": "Titel-Farbe",
-  "qrBlockRadius": "QR-Box-Rundung"
+  "qrBlockRadius": "QR-Box-Rundung",
+  "contactText": "Text Unten (Kontakt/Info)",
+  "qrDesign": "QR-Code-Design",
+  "bodyShape": "Körperform",
+  "eyeFrameShape": "Augenrahmen",
+  "eyeBallShape": "Augenmitte",
+  "shapeSquare": "Quadrat",
+  "shapeDots": "Punkte",
+  "shapeRounded": "Gerundet",
+  "shapeExtraRounded": "Extra Gerundet",
+  "shapeClassy": "Klassisch",
+  "shapeClassyRounded": "Klassisch Gerundet",
+  "shapeDot": "Punkt",
+  "useGradient": "Farbverlauf Verwenden",
+  "gradientColor": "Endfarbe Verlauf",
+  "eyeColor": "Augenfarbe"
 }
