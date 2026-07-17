@@ -46,6 +46,28 @@ const GoogleMapsPin = ({ size = 32, color = '#EA4335' }: { size?: number; color?
   </svg>
 );
 
+/* ── Accordion Component ─────────────────────── */
+
+const AccordionSection = ({ title, defaultOpen = false, children }: any) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+  return (
+    <div style={{ border: '1px solid var(--border-color)', borderRadius: '8px', marginBottom: '1rem', overflow: 'hidden', background: 'var(--card-bg)' }}>
+      <button 
+        onClick={() => setIsOpen(!isOpen)} 
+        style={{ width: '100%', padding: '1rem 1.25rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'transparent', border: 'none', cursor: 'pointer', fontWeight: 600, color: 'var(--text-main)', fontSize: '1rem' }}
+      >
+        <span>{title}</span>
+        <span style={{ fontSize: '1.25rem', color: 'var(--text-muted)' }}>{isOpen ? '−' : '+'}</span>
+      </button>
+      {isOpen && (
+        <div style={{ padding: '1.25rem', borderTop: '1px solid var(--border-color)' }}>
+          {children}
+        </div>
+      )}
+    </div>
+  );
+};
+
 /* ── Support Modal ─────────────────────── */
 
 function SupportModal({ onClose, onDownload }: { onClose: () => void; onDownload: () => void }) {
@@ -386,239 +408,239 @@ function App() {
         <div className="panel">
           <h2 className="section-title">{t('customization')}</h2>
 
-          <div className="form-group">
-            <label>{t('googleMapsLink')}</label>
-            <div className="input-group">
-              <input 
-                type="url" 
-                placeholder="https://g.page/r/..." 
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                className="main-input"
-                autoFocus
-              />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label>{t('uploadLogo')}</label>
-            <div className="file-upload-wrapper">
-              <div className="file-btn">
-                <Upload size={18} />
-                <span>{logo ? 'Logo Selected ✓' : 'Choose an image'}</span>
-              </div>
-              <input type="file" accept="image/png, image/jpeg, image/svg+xml" onChange={handleLogoUpload} />
-            </div>
-          </div>
-          
-          {logo && (
+          <AccordionSection title={t('googleMapsLink')} defaultOpen={true}>
             <div className="form-group">
-              <label style={{ display: 'flex', justifyContent: 'flex-start', gap: '8px' }}>
-                <span>{t('logoScale')}</span>
-                <span style={{color: 'var(--primary)'}}>{logoScale}%</span>
-              </label>
-              <input type="range" min="10" max="40" step="1" value={logoScale} onChange={(e) => setLogoScale(parseInt(e.target.value))} />
-            </div>
-          )}
-
-          <div className="grid-2">
-            <div className="form-group">
-              <label style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span>{t('qrColor')}</span>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', margin: 0 }}>
-                  <input type="checkbox" checked={isGradient} onChange={(e) => setIsGradient(e.target.checked)} style={{ width: 'auto' }} />
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t('useGradient')}</span>
-                </label>
-              </label>
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <input type="color" className="form-control" value={qrColor} onChange={(e) => setQrColor(e.target.value)} style={{ flex: 1 }} />
-                {isGradient && (
-                  <input type="color" className="form-control" value={gradientColor} onChange={(e) => setGradientColor(e.target.value)} style={{ flex: 1 }} title={t('gradientColor')} />
-                )}
-              </div>
-            </div>
-            <div className="form-group">
-              <label>{t('bgColor')}</label>
-              <input type="color" className="form-control" value={bgColor} onChange={(e) => setBgColor(e.target.value)} />
-            </div>
-          </div>
-
-          <div className="grid-2">
-            <div className="form-group">
-              <label>{t('frameTheme')}</label>
-              <input type="color" className="form-control" value={themeColor} onChange={(e) => setThemeColor(e.target.value)} />
-            </div>
-            <div className="form-group">
-              <label style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span>{t('starColor')}</span>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', margin: 0 }}>
-                  <input type="checkbox" checked={showStars} onChange={(e) => setShowStars(e.target.checked)} style={{ width: 'auto' }} />
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t('showStars')}</span>
-                </label>
-              </label>
-              <input type="color" className="form-control" value={starColor} onChange={(e) => setStarColor(e.target.value)} disabled={!showStars} />
-            </div>
-          </div>
-
-          <div className="grid-2">
-            <div className="form-group">
-              <label>{t('frameStyle')}</label>
-              <select className="form-control" value={frameStyle} onChange={(e) => setFrameStyle(e.target.value as FrameStyle)}>
-                <option value="minimal">{t('styles.minimal')}</option>
-                <option value="bold">{t('styles.bold')}</option>
-                <option value="gradient">{t('styles.gradient')}</option>
-                <option value="elegant">{t('styles.elegant')}</option>
-                <option value="playful">{t('styles.playful')}</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label>{t('fontFamily')}</label>
-              <select className="form-control" value={fontFamily} onChange={(e) => setFontFamily(e.target.value as FontFamily)}>
-                <option value="inter">{t('fonts.inter')}</option>
-                <option value="serif">{t('fonts.serif')}</option>
-                <option value="mono">{t('fonts.mono')}</option>
-                <option value="cursive">{t('fonts.cursive')}</option>
-                <option value="rounded">{t('fonts.rounded')}</option>
-              </select>
-            </div>
-          </div>
-
-          <hr className="divider" />
-          <h3 className="section-subtitle">{t('textOverrides')}</h3>
-
-          <div className="grid-2">
-            <div className="form-group">
-              <label>{t('customTitle')}</label>
-              <input type="text" className="form-control" placeholder={t('frameText')} value={customTitle} onChange={(e) => setCustomTitle(e.target.value)} />
-            </div>
-            <div className="form-group">
-              <label>{t('customSubtitle')}</label>
-              <input type="text" className="form-control" placeholder={t('scanMe')} value={customSubtitle} onChange={(e) => setCustomSubtitle(e.target.value)} />
-            </div>
-          </div>
-
-          <div className="grid-2">
-            <div className="form-group">
-              <label>{t('textAlign')}</label>
-              <select className="form-control" value={textAlign} onChange={(e) => setTextAlign(e.target.value as any)}>
-                <option value="left">{t('alignLeft')}</option>
-                <option value="center">{t('alignCenter')}</option>
-                <option value="right">{t('alignRight')}</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label>{t('titleColor')}</label>
-              <input type="color" className="form-control" value={titleColor || themeColor} onChange={(e) => setTitleColor(e.target.value)} />
-            </div>
-          </div>
-
-          <div className="form-group" style={{ marginTop: '1rem' }}>
-            <label>{t('contactText')}</label>
-            <input type="text" className="form-control" placeholder="+351 910 000 000" value={contactText} onChange={(e) => setContactText(e.target.value)} />
-          </div>
-
-          <hr className="divider" />
-          <h3 className="section-subtitle">{t('qrDesign')}</h3>
-
-          <div className="grid-1" style={{ gap: '1.5rem' }}>
-            <div className="form-group">
-              <label>{t('bodyShape')}</label>
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                {[
-                  { id: 'square', svg: <path d="M3 3h6v6H3zM15 3h6v6h-6zM3 15h6v6H3zM15 15h6v6h-6z"/> },
-                  { id: 'dots', svg: <g><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/></g> },
-                  { id: 'rounded', svg: <g><rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="3" width="6" height="6" rx="1.5"/><rect x="3" y="15" width="6" height="6" rx="1.5"/><rect x="15" y="15" width="6" height="6" rx="1.5"/></g> },
-                  { id: 'extra-rounded', svg: <g><rect x="3" y="3" width="6" height="6" rx="3"/><rect x="15" y="3" width="6" height="6" rx="3"/><rect x="3" y="15" width="6" height="6" rx="3"/><rect x="15" y="15" width="6" height="6" rx="3"/></g> },
-                  { id: 'classy', svg: <g><path d="M3 3h6v6H3zM15 3h6v6h-6zM3 15h6v6H3z" rx="2"/><rect x="15" y="15" width="6" height="6" rx="2"/></g> },
-                  { id: 'classy-rounded', svg: <g><path d="M3 6a3 3 0 013-3h3v6H3V6z"/><path d="M15 3h3a3 3 0 013 3v3h-6V3z"/><path d="M3 15v3a3 3 0 003 3h3v-6H3z"/><circle cx="18" cy="18" r="3"/></g> }
-                ].map(shape => (
-                  <button
-                    key={shape.id}
-                    title={shape.id}
-                    onClick={() => setDotsType(shape.id)}
-                    style={{
-                      width: '44px', height: '44px', padding: '6px',
-                      border: dotsType === shape.id ? '2px solid var(--primary)' : '1px solid var(--border-color)',
-                      borderRadius: '8px', background: 'var(--card-bg)', cursor: 'pointer',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      transition: 'all 0.2s ease',
-                      transform: dotsType === shape.id ? 'scale(1.05)' : 'scale(1)'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                    onMouseLeave={(e) => e.currentTarget.style.transform = dotsType === shape.id ? 'scale(1.05)' : 'scale(1)'}
-                  >
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">{shape.svg}</svg>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="form-group">
-              <label>{t('eyeFrameShape')}</label>
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                {[
-                  { id: 'square', svg: <path d="M2 2h20v20H2zM6 6h12v12H6z" fillRule="evenodd"/> },
-                  { id: 'dot', svg: <path d="M12 2a10 10 0 0110 10 10 10 0 01-10 10A10 10 0 012 12 10 10 0 0112 2zm0 4a6 6 0 00-6 6 6 6 0 006 6 6 6 0 006-6 6 6 0 00-6-6z" fillRule="evenodd"/> },
-                  { id: 'extra-rounded', svg: <path d="M6 2h12a4 4 0 014 4v12a4 4 0 01-4 4H6a4 4 0 01-4-4V6a4 4 0 014-4zm0 4v12h12V6H6z" fillRule="evenodd"/> }
-                ].map(shape => (
-                  <button
-                    key={shape.id}
-                    title={shape.id}
-                    onClick={() => setCornersSquareType(shape.id)}
-                    style={{
-                      width: '44px', height: '44px', padding: '6px',
-                      border: cornersSquareType === shape.id ? '2px solid var(--primary)' : '1px solid var(--border-color)',
-                      borderRadius: '8px', background: 'var(--card-bg)', cursor: 'pointer',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      transition: 'all 0.2s ease',
-                      transform: cornersSquareType === shape.id ? 'scale(1.05)' : 'scale(1)'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                    onMouseLeave={(e) => e.currentTarget.style.transform = cornersSquareType === shape.id ? 'scale(1.05)' : 'scale(1)'}
-                  >
-                    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">{shape.svg}</svg>
-                  </button>
-                ))}
+              <div className="input-group">
+                <input 
+                  type="url" 
+                  placeholder="https://g.page/r/..." 
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  className="form-control"
+                  style={{ padding: '0.75rem', fontSize: '1rem', width: '100%', boxSizing: 'border-box' }}
+                  autoFocus
+                />
               </div>
             </div>
             
+            <div className="grid-2" style={{ marginTop: '1rem' }}>
+              <div className="form-group">
+                <label>{t('customTitle')}</label>
+                <input type="text" className="form-control" placeholder={t('frameText')} value={customTitle} onChange={(e) => setCustomTitle(e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label>{t('customSubtitle')}</label>
+                <input type="text" className="form-control" placeholder={t('scanMe')} value={customSubtitle} onChange={(e) => setCustomSubtitle(e.target.value)} />
+              </div>
+            </div>
+
             <div className="grid-2">
               <div className="form-group">
-                <label>{t('eyeBallShape')}</label>
+                <label>{t('textAlign')}</label>
+                <select className="form-control" value={textAlign} onChange={(e) => setTextAlign(e.target.value as any)}>
+                  <option value="left">{t('alignLeft')}</option>
+                  <option value="center">{t('alignCenter')}</option>
+                  <option value="right">{t('alignRight')}</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>{t('titleColor')}</label>
+                <input type="color" className="form-control" value={titleColor || themeColor} onChange={(e) => setTitleColor(e.target.value)} />
+              </div>
+            </div>
+
+            <div className="form-group" style={{ marginTop: '1rem' }}>
+              <label>{t('contactText')}</label>
+              <input type="text" className="form-control" placeholder="+351 910 000 000" value={contactText} onChange={(e) => setContactText(e.target.value)} />
+            </div>
+          </AccordionSection>
+
+          <AccordionSection title={t('uploadLogo')}>
+            <div className="form-group">
+              <div className="file-upload-wrapper">
+                <div className="file-btn">
+                  <Upload size={18} />
+                  <span>{logo ? 'Logo Selected ✓' : 'Choose an image'}</span>
+                </div>
+                <input type="file" accept="image/png, image/jpeg, image/svg+xml" onChange={handleLogoUpload} />
+              </div>
+            </div>
+            
+            {logo && (
+              <div className="form-group" style={{ marginTop: '1rem' }}>
+                <label style={{ display: 'flex', justifyContent: 'flex-start', gap: '8px' }}>
+                  <span>{t('logoScale')}</span>
+                  <span style={{color: 'var(--primary)'}}>{logoScale}%</span>
+                </label>
+                <input type="range" min="10" max="40" step="1" value={logoScale} onChange={(e) => setLogoScale(parseInt(e.target.value))} />
+              </div>
+            )}
+          </AccordionSection>
+
+          <AccordionSection title={t('colorsAndTheme') || 'Colors & Theme'}>
+            <div className="grid-2">
+              <div className="form-group">
+                <label style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>{t('qrColor')}</span>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', margin: 0 }}>
+                    <input type="checkbox" checked={isGradient} onChange={(e) => setIsGradient(e.target.checked)} style={{ width: 'auto' }} />
+                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t('useGradient')}</span>
+                  </label>
+                </label>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <input type="color" className="form-control" value={qrColor} onChange={(e) => setQrColor(e.target.value)} style={{ flex: 1 }} />
+                  {isGradient && (
+                    <input type="color" className="form-control" value={gradientColor} onChange={(e) => setGradientColor(e.target.value)} style={{ flex: 1 }} title={t('gradientColor')} />
+                  )}
+                </div>
+              </div>
+              <div className="form-group">
+                <label>{t('bgColor')}</label>
+                <input type="color" className="form-control" value={bgColor} onChange={(e) => setBgColor(e.target.value)} />
+              </div>
+            </div>
+
+            <div className="grid-2">
+              <div className="form-group">
+                <label>{t('frameTheme')}</label>
+                <input type="color" className="form-control" value={themeColor} onChange={(e) => setThemeColor(e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>{t('starColor')}</span>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', margin: 0 }}>
+                    <input type="checkbox" checked={showStars} onChange={(e) => setShowStars(e.target.checked)} style={{ width: 'auto' }} />
+                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t('showStars')}</span>
+                  </label>
+                </label>
+                <input type="color" className="form-control" value={starColor} onChange={(e) => setStarColor(e.target.value)} disabled={!showStars} />
+              </div>
+            </div>
+
+            <div className="grid-2">
+              <div className="form-group">
+                <label>{t('frameStyle')}</label>
+                <select className="form-control" value={frameStyle} onChange={(e) => setFrameStyle(e.target.value as FrameStyle)}>
+                  <option value="minimal">{t('styles.minimal')}</option>
+                  <option value="bold">{t('styles.bold')}</option>
+                  <option value="gradient">{t('styles.gradient')}</option>
+                  <option value="elegant">{t('styles.elegant')}</option>
+                  <option value="playful">{t('styles.playful')}</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>{t('fontFamily')}</label>
+                <select className="form-control" value={fontFamily} onChange={(e) => setFontFamily(e.target.value as FontFamily)}>
+                  <option value="inter">{t('fonts.inter')}</option>
+                  <option value="serif">{t('fonts.serif')}</option>
+                  <option value="mono">{t('fonts.mono')}</option>
+                  <option value="cursive">{t('fonts.cursive')}</option>
+                  <option value="rounded">{t('fonts.rounded')}</option>
+                </select>
+              </div>
+            </div>
+          </AccordionSection>
+
+          <AccordionSection title={t('qrDesign')}>
+            <div className="grid-1" style={{ gap: '1.5rem' }}>
+              <div className="form-group">
+                <label>{t('bodyShape')}</label>
                 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                   {[
-                    { id: 'square', svg: <rect x="6" y="6" width="12" height="12"/> },
-                    { id: 'dot', svg: <circle cx="12" cy="12" r="6"/> }
+                    { id: 'square', svg: <path d="M3 3h6v6H3zM15 3h6v6h-6zM3 15h6v6H3zM15 15h6v6h-6z"/> },
+                    { id: 'dots', svg: <g><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/></g> },
+                    { id: 'rounded', svg: <g><rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="3" width="6" height="6" rx="1.5"/><rect x="3" y="15" width="6" height="6" rx="1.5"/><rect x="15" y="15" width="6" height="6" rx="1.5"/></g> },
+                    { id: 'extra-rounded', svg: <g><rect x="3" y="3" width="6" height="6" rx="3"/><rect x="15" y="3" width="6" height="6" rx="3"/><rect x="3" y="15" width="6" height="6" rx="3"/><rect x="15" y="15" width="6" height="6" rx="3"/></g> },
+                    { id: 'classy', svg: <g><path d="M3 3h6v6H3zM15 3h6v6h-6zM3 15h6v6H3z" rx="2"/><rect x="15" y="15" width="6" height="6" rx="2"/></g> },
+                    { id: 'classy-rounded', svg: <g><path d="M3 6a3 3 0 013-3h3v6H3V6z"/><path d="M15 3h3a3 3 0 013 3v3h-6V3z"/><path d="M3 15v3a3 3 0 003 3h3v-6H3z"/><circle cx="18" cy="18" r="3"/></g> }
                   ].map(shape => (
                     <button
                       key={shape.id}
                       title={shape.id}
-                      onClick={() => setCornersDotType(shape.id)}
+                      onClick={() => setDotsType(shape.id)}
                       style={{
                         width: '44px', height: '44px', padding: '6px',
-                        border: cornersDotType === shape.id ? '2px solid var(--primary)' : '1px solid var(--border-color)',
+                        border: dotsType === shape.id ? '2px solid var(--primary)' : '1px solid var(--border-color)',
                         borderRadius: '8px', background: 'var(--card-bg)', cursor: 'pointer',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         transition: 'all 0.2s ease',
-                        transform: cornersDotType === shape.id ? 'scale(1.05)' : 'scale(1)'
+                        transform: dotsType === shape.id ? 'scale(1.05)' : 'scale(1)'
                       }}
                       onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                      onMouseLeave={(e) => e.currentTarget.style.transform = cornersDotType === shape.id ? 'scale(1.05)' : 'scale(1)'}
+                      onMouseLeave={(e) => e.currentTarget.style.transform = dotsType === shape.id ? 'scale(1.05)' : 'scale(1)'}
+                    >
+                      <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">{shape.svg}</svg>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>{t('eyeFrameShape')}</label>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {[
+                    { id: 'square', svg: <path d="M2 2h20v20H2zM6 6h12v12H6z" fillRule="evenodd"/> },
+                    { id: 'dot', svg: <path d="M12 2a10 10 0 0110 10 10 10 0 01-10 10A10 10 0 012 12 10 10 0 0112 2zm0 4a6 6 0 00-6 6 6 6 0 006 6 6 6 0 006-6 6 6 0 00-6-6z" fillRule="evenodd"/> },
+                    { id: 'extra-rounded', svg: <path d="M6 2h12a4 4 0 014 4v12a4 4 0 01-4 4H6a4 4 0 01-4-4V6a4 4 0 014-4zm0 4v12h12V6H6z" fillRule="evenodd"/> }
+                  ].map(shape => (
+                    <button
+                      key={shape.id}
+                      title={shape.id}
+                      onClick={() => setCornersSquareType(shape.id)}
+                      style={{
+                        width: '44px', height: '44px', padding: '6px',
+                        border: cornersSquareType === shape.id ? '2px solid var(--primary)' : '1px solid var(--border-color)',
+                        borderRadius: '8px', background: 'var(--card-bg)', cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        transition: 'all 0.2s ease',
+                        transform: cornersSquareType === shape.id ? 'scale(1.05)' : 'scale(1)'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                      onMouseLeave={(e) => e.currentTarget.style.transform = cornersSquareType === shape.id ? 'scale(1.05)' : 'scale(1)'}
                     >
                       <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">{shape.svg}</svg>
                     </button>
                   ))}
                 </div>
               </div>
-              <div className="form-group">
-                <label>{t('eyeColor')}</label>
-                <input type="color" className="form-control" value={eyeColor || qrColor} onChange={(e) => setEyeColor(e.target.value)} />
+              
+              <div className="grid-2">
+                <div className="form-group">
+                  <label>{t('eyeBallShape')}</label>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    {[
+                      { id: 'square', svg: <rect x="6" y="6" width="12" height="12"/> },
+                      { id: 'dot', svg: <circle cx="12" cy="12" r="6"/> }
+                    ].map(shape => (
+                      <button
+                        key={shape.id}
+                        title={shape.id}
+                        onClick={() => setCornersDotType(shape.id)}
+                        style={{
+                          width: '44px', height: '44px', padding: '6px',
+                          border: cornersDotType === shape.id ? '2px solid var(--primary)' : '1px solid var(--border-color)',
+                          borderRadius: '8px', background: 'var(--card-bg)', cursor: 'pointer',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          transition: 'all 0.2s ease',
+                          transform: cornersDotType === shape.id ? 'scale(1.05)' : 'scale(1)'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = cornersDotType === shape.id ? 'scale(1.05)' : 'scale(1)'}
+                      >
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">{shape.svg}</svg>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label>{t('eyeColor')}</label>
+                  <input type="color" className="form-control" value={eyeColor || qrColor} onChange={(e) => setEyeColor(e.target.value)} />
+                </div>
               </div>
             </div>
-          </div>
+          </AccordionSection>
 
-          <hr className="divider" />
-          <h3 className="section-subtitle">{t('advancedOptions')}</h3>
+          <AccordionSection title={t('advancedOptions')}>
 
           <div className="grid-2">
             <div className="form-group">
@@ -663,6 +685,7 @@ function App() {
               <option value="H">H (30%)</option>
             </select>
           </div>
+          </AccordionSection>
 
           <hr className="divider" />
 

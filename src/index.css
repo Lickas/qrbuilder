@@ -571,9 +571,10 @@ input[type="color"]:focus {
 .modal-highlight {
   color: var(--text-main);
   font-weight: 500;
-  background: rgba(59, 130, 246, 0.1);
+  background: var(--bg-color);
   padding: 1.25rem;
   border-radius: 8px;
+  border: 1px solid var(--border-color);
   border-left: 4px solid var(--primary);
   text-align: left;
   margin-top: 1rem;
