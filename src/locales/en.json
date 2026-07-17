@@ -73,5 +73,6 @@
   "shapeDot": "Dot",
   "useGradient": "Use Gradient Color",
   "gradientColor": "Gradient End Color",
-  "eyeColor": "Custom Eye Color"
+  "eyeColor": "Custom Eye Color",
+  "colorsAndTheme": "Colors & Theme"
 }

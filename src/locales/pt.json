@@ -73,5 +73,6 @@
   "shapeDot": "Ponto",
   "useGradient": "Usar Gradiente",
   "gradientColor": "Cor Final do Gradiente",
-  "eyeColor": "Cor dos Olhos"
+  "eyeColor": "Cor dos Olhos",
+  "colorsAndTheme": "Cores e Tema"
 }

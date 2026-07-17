@@ -73,5 +73,6 @@
   "shapeDot": "Point",
   "useGradient": "Utiliser un Dégradé",
   "gradientColor": "Couleur de Fin du Dégradé",
-  "eyeColor": "Couleur des Yeux"
+  "eyeColor": "Couleur des Yeux",
+  "colorsAndTheme": "Couleurs et Thème"
 }
