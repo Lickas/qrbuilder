@@ -1,0 +1,96 @@
+# reviewqr.site
+
+> The #1 free Google Maps Review QR Code Generator.
+
+## What is reviewqr.site?
+
+reviewqr.site is a completely free online tool that generates customizable QR codes linking directly to a business's Google Maps review page. It is designed for restaurants, cafés, hotels, salons, clinics, and any local business that wants to increase their Google reviews.
+
+## URL
+
+https://reviewqr.site
+
+## Features
+
+- Generate QR codes from any Google Maps review link
+- 5 premium frame designs: Minimalist, Bold & Loud, Gradient Glow, Elegant Classic, Playful Bubble
+- Google logo and 5-star rating badge on every frame
+- Google Maps pin icon
+- Upload your business logo into the center of the QR code
+- Full color customization: QR code color, background color, frame theme color, star color
+- 5 font families: Inter (Modern), Serif (Classic), Monospace (Tech), Cursive (Fancy), Nunito (Rounded)
+- Custom title and subtitle text on the frame
+- Adjustable QR code size (100px–350px)
+- Adjustable frame corner radius (0px–100px)
+- Adjustable QR code padding/margin
+- Error correction level control (L/M/Q/H) for logo compatibility
+- Multi-language support: English, Portuguese, Spanish, French, German
+- Automatic browser language detection
+- URL parameter language support (?lang=pt)
+- High-resolution PNG download at 3x pixel ratio
+- One-click copy to clipboard
+- Dark mode and light mode toggle
+- No signup required
+- No watermarks
+- No usage limits
+- No ads
+- Completely free
+
+## Who is this for?
+
+- Restaurants and cafés
+- Hotels and Airbnb hosts
+- Barbershops and hair salons
+- Dental and medical clinics
+- Gyms and fitness studios
+- Pet shops and veterinary clinics
+- Car washes and auto repair shops
+- Real estate agents
+- Retail stores
+- Any local business on Google Maps
+
+## How to use
+
+1. Find your Google Maps business review link (Google Maps → your business → Share → Copy link)
+2. Go to https://reviewqr.site
+3. Paste your link
+4. Customize colors, frame design, logo, font, and language
+5. Download your QR code as a high-resolution PNG or copy it to clipboard
+
+## Why Google Reviews matter
+
+Google Reviews directly impact local SEO ranking. Businesses with more positive reviews appear higher in Google Maps search results, attract more customers, and build trust. A QR code makes it effortless for customers to leave a review.
+
+## Pricing
+
+Free. $0. No hidden fees. No premium tiers. No signup.
+
+## Creator
+
+Made with ❤️ by Oxiria Studios (https://oxiria.com)
+
+## Technical Details
+
+- Built with React + TypeScript + Vite
+- Uses qrcode.react for QR generation
+- Uses html-to-image for PNG export
+- Internationalization via i18next
+- No backend, no database, no tracking
+- Fully client-side, privacy-friendly
+- Hosted as a static site
+
+## Alternatives comparison
+
+| Feature | reviewqr.site | Other tools |
+|---|---|---|
+| Price | Free | $5–$20/month |
+| Google branding | ✅ Logo + Stars | ❌ Generic |
+| Frame designs | 5 premium | 1–2 basic |
+| Logo upload | ✅ | Often paid |
+| Multi-language | 5 languages | English only |
+| Signup required | No | Yes |
+| Watermarks | None | Often yes |
+
+## Contact
+
+Visit https://reviewqr.site or reach out to Oxiria Studios.

@@ -1,0 +1,20 @@
+# reviewqr.site
+
+> Free Google Maps Review QR Code Generator. No signup, no watermarks, no limits.
+
+reviewqr.site is a 100% free tool to create customizable QR codes for Google Maps business reviews. Designed for restaurants, cafés, hotels, salons, clinics, and local businesses.
+
+## Features
+
+- QR codes from Google Maps review links
+- 5 premium frame designs with Google logo and 5-star badges
+- Logo upload, custom colors, custom text, 5 fonts
+- Multi-language: EN, PT, ES, FR, DE (auto-detected)
+- High-res PNG download and clipboard copy
+- Dark/light mode
+- No signup, no watermarks, no limits, no ads, $0
+
+## Links
+
+- [Homepage](https://reviewqr.site)
+- [Full documentation](https://reviewqr.site/llms.txt)

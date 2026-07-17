@@ -1,0 +1,16 @@
+{
+  "name": "Free Google Review QR Code Generator",
+  "short_name": "Review QR",
+  "description": "Generate beautiful, customizable QR codes for Google Maps business reviews — completely free. No signup, no watermarks.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
